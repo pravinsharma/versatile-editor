@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Versatile Editor</title>
+  <!-- Import Tailwind CSS -->
+  <link href="/src/style.css" rel="stylesheet">
+</head>
+<body class="flex flex-col h-screen min-h-screen bg-gray-400 text-black">
+
+<!-- Header Section -->
+<header class="bg-white py-4 px-6 shadow-lg sticky top-0 z-50 w-full">
+  <div class="container mx-auto flex items-center justify-between">
+    <a href="#" class="text-xl font-bold">Versatile Editor</a>
+    <nav class="flex space-x-4">
+      <!-- Add your navigation links here -->
+      <li><button id="toggleColor" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">Set Red</button></li>
+      <li><button id="toggleColorBlack" class="px-2 py-1 bg-gray-800 text-white rounded hover:bg-gray-700 focus:outline-none">Set Black</button></li>
+    </nav>
+  </div>
+</header>
+
+<!-- Main Canvas Section -->
+<div class="h-full w-full z-0 top-0 bg-amber-900">
+  <canvas id="mainCanvas" height="1440" width="2560" class="bg-amber-200"></canvas>
+</div>
+
+<!-- Footer Section -->
+<footer class="bg-gray-100 text-center py-4 px-6 mt-8 sticky bottom-0 w-full z-50">
+  <p>&copy; 2023 Versatile Editor. All rights reserved.</p>
+</footer>
+
+<script src="/src/main.js" defer></script>
+</body>
+</html>
