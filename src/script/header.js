@@ -15,6 +15,7 @@ export default class HeaderMenu {
 
     // Close dropdowns when clicking outside or inside
     document.addEventListener('click', (e) => {
+        console.log('Document clicked, closeing dropdowns if needed');
         const isInsideDropdown = e.target.closest('.relative-group');
         if (!isInsideDropdown) {
             this.closeAllDropdowns();
@@ -47,18 +48,21 @@ export default class HeaderMenu {
   }
 
   toggleDropdown(id) {
-    // Use the global function from header.js — ensure it's imported!
+    // Hide all dropdowns first
+    this.closeAllDropdowns();
+
     const dropdownId = `${id}-dropdown`;
-    if (typeof window.toggleDropdown === 'function') {
-      window.toggleDropdown(dropdownId);
-    } else {
-      console.error(`toggleDropdown is not defined!`);
+    // Toggle the selected dropdown
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+        dropdown.classList.toggle('invisible');
     }
   }
 
   closeAllDropdowns() {
-    document.querySelectorAll('.relative-group > div').forEach(button => {
-        button.classList.add('invisible');
+    // Hide all dropdowns first
+    document.querySelectorAll('div[id$="-dropdown"]').forEach(el => {
+        el.classList.add('invisible');
     });
   }
 }
