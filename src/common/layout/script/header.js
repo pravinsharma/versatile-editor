@@ -6,17 +6,10 @@ export default class HeaderMenu {
   init() {
     console.log('Initializing HeaderMenu');
 
-    // Wait for DOM to be fully loaded
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.bindEvents());
-    } else {
-      this.bindEvents();
-    }
-
     // Close dropdowns when clicking outside or inside
     document.addEventListener('click', (e) => {
-        console.log('Document clicked, closeing dropdowns if needed');
         const isInsideDropdown = e.target.closest('.relative-group');
+
         if (!isInsideDropdown) {
             this.closeAllDropdowns();
         }
@@ -32,7 +25,6 @@ export default class HeaderMenu {
       
       if (anchor) {
         anchor.addEventListener('click', () => {
-          console.log(`Clicked: ${id}`);
           this.toggleDropdown(id);
         });
       }
@@ -47,7 +39,7 @@ export default class HeaderMenu {
     }
   }
 
-  toggleDropdown(id) {
+  toggleDropdown(id) {console.log('Toggling dropdown for', id);
     // Hide all dropdowns first
     this.closeAllDropdowns();
 
@@ -65,4 +57,9 @@ export default class HeaderMenu {
         el.classList.add('invisible');
     });
   }
+
+  logout() {
+    console.log('Logout clicked!');
+    // Add your logout logic here
+  };
 }

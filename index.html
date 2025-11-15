@@ -6,101 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Versatile Editor</title>
   <!-- Import Tailwind CSS -->
-  <link href="/src/style.css" rel="stylesheet">
+  <link href="/src/common/style.css" rel="stylesheet">
   <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="flex flex-col h-screen min-h-screen bg-gray-400 text-black">
 
-<!-- Header Section -->
-<!-- Dynamically injected header using JavaScript -->
+<!-- Header placeholder -->
+<div id="header"></div>
+<!-- Main content placeholder -->
+<div id="main"></div>
+<!-- Footer placeholder -->
+<div id="footer"></div>
+
 <script type="module">
-  
-  // Import header.js utilities and HeaderMenu class
-  import HeaderMenu from './src/script/header.js';
+  import HeaderMenu from './src/common/layout/script/header.js';
+  import { loadHtml } from './src/common/utils.js';
 
-  // Load and inject the header HTML file, then initialize HeaderMenu
-  async function loadHeaderAndInitMenu() {
-    try {
-      const response = await fetch('src/header.html');
-      if (!response.ok) throw new Error(`Failed to load header: ${response.status}`);
-      const htmlContent = await response.text();
-      document.body.insertAdjacentHTML('afterbegin', htmlContent);
-      // Now initialize HeaderMenu
-      const headerMenu = new HeaderMenu();
-
-      window.toggleDropdown = headerMenu.toggleDropdown.bind(headerMenu);
-
-      window.logout = function() {
-        console.log('Logout clicked!');
-        // Add your logout logic here
-      };
-    } catch (error) {
-      console.error("Error loading header:", error);
-    }
-  }
-
-  // Run after DOM is ready
   window.addEventListener("DOMContentLoaded", () => {
-    loadHeaderAndInitMenu();
+    // Load header into #header
+    loadHtml('src/common/layout/header.html', 'header').then(() => {
+      const headerMenu = new HeaderMenu();
+      headerMenu.bindEvents();
+      window.toggleDropdown = headerMenu.toggleDropdown.bind(headerMenu);
+      window.logout = headerMenu.logout.bind(headerMenu);
+    });
+    // Load main content into #main
+    loadHtml('src/common/layout/main.html', 'main');
+    // Load footer into #footer
+    loadHtml('src/common/layout/footer.html', 'footer');
   });
 </script>
 
-
-<!-- Main content area with collapsible file browser -->
-<main class="flex h-screen bg-gray-100">
-    <!-- Left sidebar for file browser (collapsible) -->
-    <aside class="w-64 bg-white border-r border-gray-300 flex-shrink-0 transition-all duration-300 ease-in-out"
-            id="file-browser-sidebar">
-        <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-            <h2 class="text-lg font-semibold text-gray-800">File Browser</h2>
-            <button 
-                onclick="toggleSidebar()" 
-                class="p-1.5 rounded-full hover:bg-gray-200 transition-colors duration-200"
-                aria-label="Toggle sidebar">
-                <i class="fas fa-chevron-left text-gray-600"></i>
-            </button>
-        </div>
-        
-        <div class="p-4 overflow-y-auto h-[calc(100vh-7rem)] max-h-[calc(100vh-7rem)]">
-            <ul class="space-y-2">
-                <li class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors duration-200">
-                    <i class="fas fa-folder text-gray-500 mr-3"></i>
-                    <span class="text-sm font-medium">Documents</span>
-                </li>
-                <li class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors duration-200">
-                    <i class="fas fa-file-alt text-gray-500 mr-3"></i>
-                    <span class="text-sm font-medium">Projects</span>
-                </li>
-                <li class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer transition-colors duration-200">
-                    <i class="fas fa-folder-open text-gray-500 mr-3"></i>
-                    <span class="text-sm font-medium">Templates</span>
-                </li>
-            </ul>
-        </div>
-    </aside>
-
-    <!-- Main content area -->
-    <section class="flex-1 p-6 overflow-y-auto">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">Document Editor</h1>
-        <p class="text-gray-600 mb-4">This is the main content area where you can edit your documents.</p>
-        
-        <!-- Add a placeholder for content editing -->
-        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-            <h2 class="text-xl font-semibold text-gray-800 mb-3">Edit Your Document</h2>
-            <textarea 
-                class="w-full h-48 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Start typing your content here..."></textarea>
-        </div>
-    </section>
-</main>
-
-<!-- Footer Section -->
-<footer class="bg-gray-100 text-center py-4 px-6 mt-8 sticky bottom-0 w-full z-50">
-  <p>&copy; 2023 Versatile Editor. All rights reserved.</p>
-</footer>
-
 <!-- Load the file browser script and attach global toggleSidebar -->
-<script type="module" src="src/script/file-browser.js"></script>
+<!--<script type="module" src="src/script/file-browser.js"></script>-->
 </body>
 </html>
